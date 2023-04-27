@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  currency-exchange:
+    image: in28min/currency-exchange:0.0.1-RELEASE
+    platform: linux/amd64
+    container_name: microservices-currency-exchange-1
+    ports:
+      - 8000:8000
+    networks:
+      - currency-compose-network
+
+  currency-conversion:
+    image: in28min/currency-conversion:0.0.1-RELEASE
+    platform: linux/amd64
+    container_name: microservices-currency-conversion-1
+    ports:
+      - 8100:8100
+    environment:
+      CURRENCY_EXCHANGE_SERVICE_HOST: http://currency-exchange
+    networks:
+      - currency-compose-network
+
+networks:
+  currency-compose-network:
